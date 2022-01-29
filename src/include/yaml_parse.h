@@ -12,5 +12,5 @@ struct config {
   std::vector<std::string> cmd_arguments;
 };
 
-std::vector<config> parse(const std::string filename);
+std::vector<config> parse_yaml(const std::string filename);
 #endif

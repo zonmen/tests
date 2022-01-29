@@ -1,4 +1,4 @@
-#include "include/yaml_parce.h"
+#include "include/yaml_parse.h"
 
 #include <fstream>
 #include <iostream>
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-std::vector<config> parse(const std::string filename) {
+std::vector<config> parse_yaml(const std::string filename) {
   std::string line;
   std::vector<config> out;
 
@@ -18,7 +18,6 @@ std::vector<config> parse(const std::string filename) {
   }
   config config_buffer;
   while (getline(file, line)) {
-
     if (line.find("  - name: ") == 0) {
       if (config_buffer.name != "" and config_buffer.executable_path != "") {
         out.push_back(config_buffer);
