@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "../src/yaml_parse.cpp"
+#include "../../src/yaml_parse.cpp"
 
 TEST(yaml_parce_test, BasicAssertions) {
 
