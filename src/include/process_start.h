@@ -7,10 +7,14 @@
 #include <unistd.h>
 #include <sys/wait.h>
 
-int start_process(string name, string path);
+#include "types.h"
 
-int start_process(string name, string path, vector<string> arg);
+int start_process(std::string name, std::string path);
 
-int start_process(string name, string path, string stdout_file, bool stdout_mode = 0);
+int start_process(std::string name, std::string path, std::vector<std::string> arg);
+
+int start_process(std::string name, std::string path, std::string stdout_file, bool stdout_mode = 0);
+
+int start_process(struct set_prog_start *programm);
 
 #endif 

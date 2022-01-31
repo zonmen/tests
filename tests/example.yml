@@ -1,17 +1,19 @@
 processes:
-  - name: test_name
-    executable-path: /Desktop/test_folder
-    stdout-config:
-      file: /var/log/apps/example_app.log
-      mode: truncate
-    cmd-arguments:
-      - option-name: arg1
-      - option-name: arg2
   - name: test_name1
-    executable-path: /Desktop/test_folder
+    executable-path: /usr/local/src/function_print_arguments_1
     stdout-config:
-      file: /var/log/apps/example_app.log
+      #file: /usr/local/src/example_app1.log
+      file: /home/prutek/Desktop/example_app1.log
       mode: truncate
     cmd-arguments:
-      - option-name: arg1
-      - option-name: arg2
+      - option-name: test_name1_arg1
+      - option-name: test_name1_arg2
+  - name: test_name2
+    executable-path: /usr/local/src/function_print_arguments_2
+    stdout-config:
+      # file: /usr/local/src/example_app2.log
+      file: /home/prutek/Desktop/example_app2.log
+      mode: append
+    cmd-arguments:
+      - option-name: test_name2_arg1
+      - option-name: test_name2_arg2
