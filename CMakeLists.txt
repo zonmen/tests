@@ -21,8 +21,9 @@ enable_testing()
 
 add_executable(
   tests
-  tests/tests.cpp
-  tests/yaml_parse_test.cpp
+  tests/unit
+  tests/unit/tests.cpp
+  tests/unit/yaml_parse_test.cpp
 )
 target_link_libraries(
   tests
