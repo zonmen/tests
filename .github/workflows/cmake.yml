@@ -18,8 +18,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    
+    - name: checkout 
+      uses: actions/checkout@v2
+           
     - name: Configure CMake
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
@@ -29,18 +30,15 @@ jobs:
     - name: Tests
       working-directory: ${{github.workspace}}/build
       run: ctest -C ${{env.BUILD_TYPE}}
-
-    - name: cppcheck - prepearing
-      uses: deep5050/cppcheck-action@main
-      with:
-          github_token: ${{ secrets.GITHUB_TOKEN}}
-          std: c++14
-          exclude_check: ./build
           
+    - name: cppcheck - prepearing
+      run:  sudo apt-get -qq -y install curl cmake jq clang cppcheck &&  cppcheck --enable=all --inconclusive -i./build --std=c++14 --output-file=cppcheck_report.txt .
+                 
     - name: cppcheck - report  
       run: if [ -f "./cppcheck_report.txt" ];  then cat ./cppcheck_report.txt && (exit 1); else (exit 0); fi 
 
-    - name: Clang-format - report  
+    - name: Clang-format - report
+      if: always()
       uses: DoozyX/clang-format-lint-action@v0.13
       with:
         source: '.'
