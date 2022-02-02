@@ -2,19 +2,24 @@
 Source project automotive BASECAMP
 
 
-## Build
+## Build and run
 ```
 cd build
 cmake ../
 make
-```
-
-## Run
-``` 
-./main
+./main ../tests/example.yml
 ```
 
 ## Before commit   
+
+### Check that your branch updated with main 
+```
+git checkout main
+git pull
+git checkout validator
+git merge main
+git push
+```
 
 ### Make sure your code matches the Google C++ Style Guide.  
 For automatic format of all code you can use command: 
@@ -34,4 +39,9 @@ cd build
 cmake ../
 make
 ./tests
+```
+
+### Be sure your code passed cppcheck without warnings 
+```
+cppcheck --enable=all --inconclusive -i./build --std=c++14 main.cpp --suppress=missingIncludeSystem ./
 ```
