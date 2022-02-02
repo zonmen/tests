@@ -46,7 +46,7 @@ int start_process(set_prog_start &program) {
     // change run program status
     program.run_prog = true;
     // start new process(change current process to new)
-    if (execv(program.executable_path.c_str(), argv)) {
+    if (execv(program.executable_path.c_str(), argv) == -1) {
       // error occurred, program isn't executed
       //!!! stdout stream doesn't work here(redirected to file)
       // change run program status
