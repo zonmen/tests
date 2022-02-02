@@ -12,7 +12,9 @@ int main(int argc, char *argv[]) {
       // TODO: add logic there
       // start all process
       for (auto one_program : program) {
-        start_process(&one_program);
+        // save pid in struct variable
+        // one_program.pid = start_process(one_program);
+        start_process(one_program);
       }
       // wait until processes are done
       wait(nullptr);
