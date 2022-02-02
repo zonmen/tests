@@ -19,13 +19,16 @@ int start_process(set_prog_start &program) {
     // pointer to process arguments
     char **argv = new char *[argc];
     // first argument - program name
-    argv[0] = new char[program.name.length() + 1];
+    int word_length = 0;
+    word_length = program.name.length() + 1;
+    argv[0] = new char[word_length];
     // copy program name to arguments array
-    strcpy(argv[0], program.name.c_str());
+    strncpy(argv[0], program.name.c_str(), word_length);
     // copy all arguments to arguments array
     for (int i = 1; i < argc - 1; i++) {
-      argv[i] = new char[(program.cmd_arguments[i - 1].length() + 1)];
-      strcpy(argv[i], program.cmd_arguments[i - 1].c_str());
+      word_length = program.cmd_arguments[i - 1].length() + 1;
+      argv[i] = new char[word_length];
+      strncpy(argv[i], program.cmd_arguments[i - 1].c_str(), word_length);
     }
     // last arguments - NULL
     argv[argc - 1] = nullptr;
