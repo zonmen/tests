@@ -3,7 +3,8 @@
 
 #include <iostream>
 #include <vector>
+
 #include "types.h"
 
-std::vector<set_prog_start> parse_yaml(const std::string filename);
+std::vector<set_prog_start> parse_yaml(const std::string &filename);
 #endif
