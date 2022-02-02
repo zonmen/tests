@@ -1,6 +1,6 @@
 #include "../include/process_start.h"
 
-int start_process(const set_prog_start &program) {
+int start_process(set_prog_start &program) {
   pid_t pid;
   // create new process
   pid = fork();
@@ -40,10 +40,30 @@ int start_process(const set_prog_start &program) {
         freopen(program.stdout_config_file.c_str(), "a", stdout);
       }
     }
+    // change run program status
+    program.run_prog = true;
     // start new process(change current process to new)
     if (execv(program.executable_path.c_str(), argv)) {
-      std::cout << "ERROR" << std::endl;
+      // error occurred, program isn't executed
+      //!!! stdout stream doesn't work here(redirected to file)
+      // change run program status
+      program.run_prog = false;
+      delete[] argv;
+      // string to display error
+      std::string error_name;
+      error_name.append("Process abort\n");
+      error_name.append("Name = ");
+      error_name.append(program.name);
+      error_name.append(", pid = ");
+      // get pid of this process
+      error_name.append(std::to_string(getpid()));
+      error_name.append("\nError type");
+      // print error log
+      perror(error_name.c_str());
+      // closed child process(errno - id last error)
+      exit(errno);
     }
-    std::cout << "Process never riches these lines" << std::endl;
+    // just for cppchecker
+    delete[] argv;
   }
 }
