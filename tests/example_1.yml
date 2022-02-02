@@ -1,0 +1,42 @@
+processes:
+  - name: a1
+    executable-path: a2
+
+  - name: b1
+    executable-path: b2
+    stdout-config:
+      file: b3
+
+  - name: c1
+    executable-path: c2
+    stdout-config:
+      file: c3
+      mode: append
+
+  - name: d1
+    executable-path: d2
+    stdout-config:
+      mode: append
+
+  - name: e1
+    executable-path: e2
+    stdout-config:
+      file: e3
+      mode: truncate
+
+  - name: f1
+    executable-path: f2
+    stdout-config:
+      file: f3
+      mode: truncate
+    cmd-arguments:
+      - option-name: f4
+
+  - name: g1
+    executable-path: g2
+    stdout-config:
+      file: g3
+      mode: truncate
+    cmd-arguments:
+      - option-name: g4
+      - option-name: g5

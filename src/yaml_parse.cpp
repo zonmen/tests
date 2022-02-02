@@ -7,7 +7,7 @@
 
 using namespace std;
 
-std::vector<set_prog_start> parse_yaml(const std::string filename) {
+std::vector<set_prog_start> parse_yaml(const std::string &filename) {
   std::string line;
   std::vector<set_prog_start> out;
 
@@ -23,12 +23,11 @@ std::vector<set_prog_start> parse_yaml(const std::string filename) {
         out.push_back(config_buffer);
       }
       config_buffer = {};
-    }
-
-    if (line.find("  - name: ") == 0) {
+      config_buffer.stdout_config_truncate = true;
       config_buffer.name = line.substr(10);
       continue;
     }
+
     if (line.find("    executable-path: ") == 0) {
       config_buffer.executable_path = line.substr(21);
       continue;
@@ -43,14 +42,17 @@ std::vector<set_prog_start> parse_yaml(const std::string filename) {
       continue;
     }
 
-    if (line.find("      - option-name: ") == 0) {
-      if (line.substr(21) == "truncate") {
+    if (line.find("      mode: ") == 0) {
+      if (line.substr(12) == "truncate") {
         config_buffer.stdout_config_truncate = true;
       } else {
         config_buffer.stdout_config_truncate = false;
       }
       continue;
     }
+
+    // ToDo: convert line.find to separate function with line leng checks
+    // ToDo: add check requiered fields
   }
   if (config_buffer.name != "" and config_buffer.executable_path != "") {
     out.push_back(config_buffer);
