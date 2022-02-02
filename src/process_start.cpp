@@ -1,4 +1,4 @@
-#include "../include/process_start.h"
+#include "process_start.h"
 
 int start_process(set_prog_start &program) {
   pid_t pid;

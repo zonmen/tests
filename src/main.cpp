@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "../include/process_start.h"
-#include "../include/yaml_parse.h"
+#include "process_start.h"
+#include "yaml_parse.h"
 
 using namespace std;
 

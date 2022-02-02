@@ -1,6 +1,8 @@
 project(DeLorianExecutionManager)
 cmake_minimum_required(VERSION 3.11) 
 
+include_directories(include)
+
 add_executable(main 
               src/main.cpp 
               src/yaml_parse.cpp
