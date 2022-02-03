@@ -14,6 +14,8 @@ int start_process(set_prog_start &program) {
     return pid;
   } else {
     // child process
+    // save executable path into string
+    std::string path = program.executable_path + "/" + program.name;
     // number of process arguments(first - program name, last - NULL)
     int argc = program.cmd_arguments.size() + 2;
     // pointer to process arguments
@@ -46,7 +48,7 @@ int start_process(set_prog_start &program) {
     // change run program status
     program.run_prog = true;
     // start new process(change current process to new)
-    if (execv(program.executable_path.c_str(), argv) == -1) {
+    if (execv(path.c_str(), argv) == -1) {
       // error occurred, program isn't executed
       //!!! stdout stream doesn't work here(redirected to file)
       // change run program status
