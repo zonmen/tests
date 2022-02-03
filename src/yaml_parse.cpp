@@ -1,4 +1,4 @@
-#include "../include/yaml_parse.h"
+#include "yaml_parse.h"
 
 #include <fstream>
 #include <iostream>
