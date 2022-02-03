@@ -1,6 +1,6 @@
 #include "process_start.h"
 
-int start_process(set_prog_start &program) {
+pid_t start_process(set_prog_start &program) {
   pid_t pid;
   // create new process
   pid = fork();
@@ -68,7 +68,8 @@ int start_process(set_prog_start &program) {
       // closed child process(errno - id last error)
       exit(errno);
     }
-    // just for cppchecker
+    // these line is never reached(things below just for cppchecker)
     delete[] argv;
+    return -1;
   }
 }
