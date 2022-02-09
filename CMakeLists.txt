@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.11)
 include_directories(include)
 
 add_executable(main 
+              src/logger.cpp
               src/main.cpp 
               src/yaml_parse.cpp
               src/process_start.cpp)	
@@ -36,3 +37,4 @@ target_link_libraries(
 
 include(GoogleTest)
 gtest_discover_tests(tests)
+
