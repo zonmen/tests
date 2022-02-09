@@ -6,8 +6,7 @@ pid_t start_process(set_prog_start &program) {
   pid = fork();
   if (pid == -1) {
     // error of creation process
-    std::cout << "error" << std::endl;
-    exit(1);
+    throw std::runtime_error("Error in fork. Couldn't create a process");
   } else if (pid != 0) {
     // parent process
     // return child pid
@@ -36,13 +35,26 @@ pid_t start_process(set_prog_start &program) {
     argv[argc - 1] = nullptr;
     // check if we need to redirect programm's stdout
     if (program.stdout_config_file.size() != 0) {
-      // change file mode depending of stdout_mode
+      // change file mode depending of stdout_mode config
+      char file_mode = 0;
       if (program.stdout_config_truncate) {
-        // truncate - true
-        freopen(program.stdout_config_file.c_str(), "w", stdout);
+        // true - truncate
+        file_mode = 'w';
       } else {
-        // append - false
-        freopen(program.stdout_config_file.c_str(), "a", stdout);
+        // false - append
+        file_mode = 'a';
+      }
+      // open a log file
+      if (!freopen(program.stdout_config_file.c_str(), &file_mode, stdout)) {
+        // it doesn't open
+        // delete argv array
+        for (int i = 0; i < argc; i++) {
+          delete[] argv[i];
+        }
+        delete[] argv;
+        argv = nullptr;
+        // throw error
+        throw std::runtime_error("Error to open file in stdout config");
       }
     }
     // change run program status
@@ -53,20 +65,17 @@ pid_t start_process(set_prog_start &program) {
       //!!! stdout stream doesn't work here(redirected to file)
       // change run program status
       program.run_prog = false;
+      // delete argv array
+      for (int i = 0; i < argc; i++) {
+        delete[] argv[i];
+      }
       delete[] argv;
-      // string to display error
-      std::string error_name;
-      error_name.append("Process abort\n");
-      error_name.append("Name = ");
-      error_name.append(program.name);
-      error_name.append(", pid = ");
-      // get pid of this process
-      error_name.append(std::to_string(getpid()));
-      error_name.append("\nError type");
-      // print error log
-      perror(error_name.c_str());
-      // closed child process(errno - id last error)
-      exit(errno);
+      argv = nullptr;
+      std::string error_message(
+          "Error in execv. Couldn't start program, error: ");
+      // add error info
+      error_message.append(strerror(errno));
+      throw std::runtime_error(error_message);
     }
     // these line is never reached(things below just for cppchecker)
     delete[] argv;

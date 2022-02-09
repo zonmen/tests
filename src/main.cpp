@@ -19,6 +19,7 @@ int main(int argc, char *argv[]) {
       // wait until processes are done
       wait(nullptr);
     } catch (std::exception &ex) {
+      //!!! stdout stream doesn't work in CHILD process(redirected to file)
       cout << "Ouch! That hurts, because: " << ex.what() << "!" << endl;
     }
   } else {
