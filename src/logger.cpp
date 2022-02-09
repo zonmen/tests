@@ -4,7 +4,7 @@
 #include <iomanip>
 #include <iostream>
 
-void Logger::log(std::string text, typelog type) {
+void Logger::log(const std::string &text, typelog type) {
   if (!out.is_open()) {
     out.open(log_path, std::ios_base::app);
   }
@@ -37,6 +37,6 @@ inline std::string Logger::getLabel(typelog type) {
   return label;
 }
 
-void LOG(std::string s, typelog tp) {  // alias
+void LOG(const std::string &s, typelog tp) {  // alias
   Logger::getInstance()->log(s, tp);
 }

@@ -22,7 +22,7 @@ class Logger {
     log_path = path;
   }
 
-  void log(std::string text, typelog tp = WARN);
+  void log(const std::string &text, typelog tp = WARN);
 
  private:
   std::ofstream out;
@@ -31,5 +31,5 @@ class Logger {
   Logger() {}
 };
 
-void LOG(std::string s, typelog tp);
+void LOG(const std::string &s, typelog tp);
 #endif
