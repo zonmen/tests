@@ -5,6 +5,7 @@ include_directories(include
                     src)
 
 add_executable(main 
+              src/logger.cpp
               src/main.cpp 
               src/yaml_parse.cpp
               src/process_start.cpp)	
@@ -38,3 +39,4 @@ target_link_libraries(
 
 include(GoogleTest)
 gtest_discover_tests(tests)
+
