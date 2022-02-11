@@ -1,4 +1,5 @@
 #include "process_start.h"
+#include "logger.h"
 
 pid_t start_process(set_prog_start &program) {
   pid_t pid;
@@ -6,7 +7,10 @@ pid_t start_process(set_prog_start &program) {
   pid = fork();
   if (pid == -1) {
     // error of creation process
-    throw std::runtime_error("Error in fork. Couldn't create a process");
+    LOG("Error in process_start. Function fork(), couldn't do fork, for "
+        "program_name: " +
+            program.name,
+        ERROR);
   } else if (pid != 0) {
     // parent process
     // return child pid
@@ -47,14 +51,13 @@ pid_t start_process(set_prog_start &program) {
       // open a log file
       if (!freopen(program.stdout_config_file.c_str(), &file_mode, stdout)) {
         // it doesn't open
-        // delete argv array
-        for (int i = 0; i < argc; i++) {
-          delete[] argv[i];
-        }
-        delete[] argv;
-        argv = nullptr;
-        // throw error
-        throw std::runtime_error("Error to open file in stdout config");
+        // close stdout
+        fclose(stdout);
+        LOG("Error in process_start. Function freopen(), couldn't open stdout "
+            "config "
+            "file: " +
+                program.stdout_config_file,
+            ERROR);
       }
     }
     // change run program status
@@ -71,11 +74,13 @@ pid_t start_process(set_prog_start &program) {
       }
       delete[] argv;
       argv = nullptr;
-      std::string error_message(
-          "Error in execv. Couldn't start program, error: ");
       // add error info
+      std::string error_message(
+          "Error in proscess_start. Function execv(), couldn't start program, "
+          "error_info: ");
       error_message.append(strerror(errno));
-      throw std::runtime_error(error_message);
+      LOG(error_message, ERROR);
+      exit(1);
     }
     // these line is never reached(things below just for cppchecker)
     delete[] argv;
