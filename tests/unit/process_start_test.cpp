@@ -11,7 +11,7 @@ TEST(process_start_test, ParentHandles) {
       .executable_path = "/bin/",
       .stdout_config_file = "",
       .stdout_config_truncate = 0,
-      .run_prog = 0,
+      .pid = 0,
       .cmd_arguments = {},
   };
   int result = start_process(test_program);
@@ -26,7 +26,7 @@ TEST(process_start_test, ChildHandles) {
                                  .executable_path = "",
                                  .stdout_config_file = "",
                                  .stdout_config_truncate = 0,
-                                 .run_prog = 0,
+                                 .pid = 0,
                                  .cmd_arguments = {"arg1", "arg2"}};
 
   // 1) correct full structure

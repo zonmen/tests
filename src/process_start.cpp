@@ -2,19 +2,19 @@
 #include "logger.h"
 
 pid_t start_process(set_prog_start &program) {
-  pid_t pid;
+  pid_t process_pid;
   // create new process
-  pid = fork();
-  if (pid == -1) {
+  process_pid = fork();
+  if (process_pid == -1) {
     // error of creation process
     LOG("Error in process_start. Function fork(), couldn't do fork, for "
         "program_name: " +
             program.name,
         ERROR);
-  } else if (pid != 0) {
+  } else if (process_pid != 0) {
     // parent process
     // return child pid
-    return pid;
+    return process_pid;
   } else {
     // child process
     // save executable path into string
@@ -61,13 +61,13 @@ pid_t start_process(set_prog_start &program) {
       }
     }
     // change run program status
-    program.run_prog = true;
+    program.pid = getpid();
     // start new process(change current process to new)
     if (execv(path.c_str(), argv) == -1) {
       // error occurred, program isn't executed
       //!!! stdout stream doesn't work here(redirected to file)
       // change run program status
-      program.run_prog = false;
+      program.pid = 0;
       // delete argv array
       for (int i = 0; i < argc; i++) {
         delete[] argv[i];

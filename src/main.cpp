@@ -15,10 +15,9 @@ int main(int argc, char *argv[]) {
       auto program = parse_yaml(argv[1]);
       // TODO: add logic there
       // start all process
-      for (auto one_program : program) {
-        // save pid in struct variable
-        // one_program.pid = start_process(one_program);
-        start_process(one_program);
+      for (auto &one_program : program) {
+        // pid changes in function
+        one_program.pid = start_process(one_program);
       }
       // wait until processes are done
       wait(nullptr);
