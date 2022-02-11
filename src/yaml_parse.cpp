@@ -5,6 +5,8 @@
 #include <map>
 #include <vector>
 
+#include "logger.h"
+
 using namespace std;
 
 std::vector<set_prog_start> parse_yaml(const std::string &filename) {
@@ -14,6 +16,7 @@ std::vector<set_prog_start> parse_yaml(const std::string &filename) {
   ifstream file(filename);
 
   if (!file) {
+    LOG("Could not open config file " + filename, ERROR);
     throw std::runtime_error("Could not open config file " + filename);
   }
   set_prog_start config_buffer;
@@ -21,6 +24,7 @@ std::vector<set_prog_start> parse_yaml(const std::string &filename) {
     if (line.find("  - name: ") == 0) {
       if (config_buffer.name != "" and config_buffer.executable_path != "") {
         out.push_back(config_buffer);
+        LOG("Parsed from config file: " + config_buffer.name, INFO);
       }
       config_buffer = {};
       config_buffer.stdout_config_truncate = true;

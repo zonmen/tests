@@ -2,6 +2,8 @@
 
 #include <gtest/gtest.h>
 
+#include "../../src/logger.cpp"
+
 TEST(yaml_parce_test, BasicAssertions) {
   std::vector<set_prog_start> parced = parse_yaml("../tests/example_1.yml");
 
