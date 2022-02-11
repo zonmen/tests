@@ -1,7 +1,4 @@
-#include "process_start.cpp"
-#include <sys/wait.h>
-#include "fstream"
-#include "types.h"
+#include "../../src/process_start.cpp"
 
 #include <gtest/gtest.h>
 
@@ -29,9 +26,4 @@ TEST(process_start_test, ChildHandles) {
                                  .pid = 0,
                                  .cmd_arguments = {"arg1", "arg2"}};
 
-  // 1) correct full structure
-  // 2) correct not full structure(without stdout, without arguments)
-  // 3) error during proccess creation(execv)
-
-  // start_process(test_program);
 }
