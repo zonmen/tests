@@ -19,11 +19,11 @@ TEST(process_start_test, ParentHandles) {
 }
 
 // TEST(process_start_test, ChildHandles) {
-  // set_prog_start test_program = {.name = "",
-  //                                .executable_path = "",
-  //                                .stdout_config_file = "",
-  //                                .stdout_config_truncate = 0,
-  //                                .pid = 0,
-  //                                .cmd_arguments = {"arg1", "arg2"}};
+// set_prog_start test_program = {.name = "",
+//                                .executable_path = "",
+//                                .stdout_config_file = "",
+//                                .stdout_config_truncate = 0,
+//                                .pid = 0,
+//                                .cmd_arguments = {"arg1", "arg2"}};
 
 // }
