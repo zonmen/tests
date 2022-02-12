@@ -17,12 +17,12 @@ class Logger {
 
   void test();
 
-  void set_log_path(std::string path) {
+  void set_log_path(const std::string &path) {
     out.close();
     log_path = path;
   }
 
-  void log(const std::string &text, typelog tp = WARN);
+  void log(const std::string &text, typelog type = WARN);
 
  private:
   std::ofstream out;
