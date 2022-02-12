@@ -32,7 +32,7 @@ jobs:
       run: ctest -C ${{env.BUILD_TYPE}}
           
     - name: cppcheck - prepearing
-      run:  sudo apt-get -qq -y install curl cmake jq clang cppcheck &&  cppcheck --enable=all --inconclusive -i./build --std=c++14 --output-file=cppcheck_report.txt --suppress=missingIncludeSystem .
+      run:  sudo apt-get -qq -y install curl cmake jq clang cppcheck &&  cppcheck --enable=all --inconclusive -i./build --std=c++14 --output-file=cppcheck_report.txt --suppress=missingIncludeSystem  -I include/ .
                  
     - name: cppcheck - report  
       run: if [ -s "./cppcheck_report.txt" ];  then cat ./cppcheck_report.txt && (exit 1); else (exit 0); fi 

@@ -43,5 +43,5 @@ make
 
 ### Be sure your code passed cppcheck without warnings 
 ```
-cppcheck --enable=all --inconclusive -i./build --std=c++14 main.cpp --suppress=missingIncludeSystem ./
+cppcheck --enable=all --inconclusive -i./build --std=c++14 main.cpp --suppress=missingIncludeSystem  -I include/ ./
 ```
