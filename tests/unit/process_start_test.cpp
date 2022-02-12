@@ -18,12 +18,12 @@ TEST(process_start_test, ParentHandles) {
   // check fork -1 case
 }
 
-TEST(process_start_test, ChildHandles) {
-  set_prog_start test_program = {.name = "",
-                                 .executable_path = "",
-                                 .stdout_config_file = "",
-                                 .stdout_config_truncate = 0,
-                                 .pid = 0,
-                                 .cmd_arguments = {"arg1", "arg2"}};
+// TEST(process_start_test, ChildHandles) {
+  // set_prog_start test_program = {.name = "",
+  //                                .executable_path = "",
+  //                                .stdout_config_file = "",
+  //                                .stdout_config_truncate = 0,
+  //                                .pid = 0,
+  //                                .cmd_arguments = {"arg1", "arg2"}};
 
-}
+// }
