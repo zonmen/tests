@@ -12,6 +12,6 @@
 
 #include "types.h"
 
-pid_t start_process(set_prog_start &programm);
+pid_t start_process(set_prog_start &program);
 
 #endif
