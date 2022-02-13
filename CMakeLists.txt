@@ -1,7 +1,8 @@
 project(DeLorianExecutionManager)
 cmake_minimum_required(VERSION 3.11) 
 
-include_directories(include)
+include_directories(include
+                    src)
 
 add_executable(main 
               src/logger.cpp
@@ -28,6 +29,7 @@ add_executable(
   tests/unit
   tests/unit/tests.cpp
   tests/unit/yaml_parse_test.cpp
+  tests/unit/process_start_test.cpp
 )
 target_link_libraries(
   tests

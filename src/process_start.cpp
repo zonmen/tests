@@ -1,17 +1,21 @@
 #include "process_start.h"
 
+#include "logger.h"
+
 pid_t start_process(set_prog_start &program) {
-  pid_t pid;
+  pid_t process_pid;
   // create new process
-  pid = fork();
-  if (pid == -1) {
+  process_pid = fork();
+  if (process_pid == -1) {
     // error of creation process
-    std::cout << "error" << std::endl;
-    exit(1);
-  } else if (pid != 0) {
+    LOG("Error in process_start. Function fork(), couldn't do fork, for "
+        "program_name: " +
+            program.name,
+        ERROR);
+  } else if (process_pid != 0) {
     // parent process
     // return child pid
-    return pid;
+    return process_pid;
   } else {
     // child process
     // save executable path into string
@@ -36,37 +40,48 @@ pid_t start_process(set_prog_start &program) {
     argv[argc - 1] = nullptr;
     // check if we need to redirect programm's stdout
     if (program.stdout_config_file.size() != 0) {
-      // change file mode depending of stdout_mode
+      // change file mode depending of stdout_mode config
+      char file_mode = 0;
       if (program.stdout_config_truncate) {
-        // truncate - true
-        freopen(program.stdout_config_file.c_str(), "w", stdout);
+        // true - truncate
+        file_mode = 'w';
       } else {
-        // append - false
-        freopen(program.stdout_config_file.c_str(), "a", stdout);
+        // false - append
+        file_mode = 'a';
+      }
+      // open a log file
+      if (!freopen(program.stdout_config_file.c_str(), &file_mode, stdout)) {
+        // it doesn't open
+        // close stdout
+        fclose(stdout);
+        LOG("Error in process_start. Function freopen(), couldn't open stdout "
+            "config "
+            "file: " +
+                program.stdout_config_file,
+            ERROR);
       }
     }
     // change run program status
-    program.run_prog = true;
+    program.pid = getpid();
     // start new process(change current process to new)
     if (execv(path.c_str(), argv) == -1) {
       // error occurred, program isn't executed
       //!!! stdout stream doesn't work here(redirected to file)
       // change run program status
-      program.run_prog = false;
+      program.pid = 0;
+      // delete argv array
+      for (int i = 0; i < argc; i++) {
+        delete[] argv[i];
+      }
       delete[] argv;
-      // string to display error
-      std::string error_name;
-      error_name.append("Process abort\n");
-      error_name.append("Name = ");
-      error_name.append(program.name);
-      error_name.append(", pid = ");
-      // get pid of this process
-      error_name.append(std::to_string(getpid()));
-      error_name.append("\nError type");
-      // print error log
-      perror(error_name.c_str());
-      // closed child process(errno - id last error)
-      exit(errno);
+      argv = nullptr;
+      // add error info
+      std::string error_message(
+          "Error in proscess_start. Function execv(), couldn't start program, "
+          "error_info: ");
+      error_message.append(strerror(errno));
+      LOG(error_message, ERROR);
+      exit(1);
     }
     // these line is never reached(things below just for cppchecker)
     delete[] argv;
