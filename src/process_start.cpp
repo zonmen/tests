@@ -12,6 +12,7 @@ pid_t start_process(set_prog_start &program) {
         "program_name: " +
             program.name,
         ERROR);
+    return 0;
   } else if (process_pid != 0) {
     // parent process
     // return child pid
