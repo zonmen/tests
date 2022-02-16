@@ -397,4 +397,4 @@ FodyWeavers.xsd
 *.sln.iml
 
 # Code coverage report files
-tests/report
+tests/code_coverage/report/
