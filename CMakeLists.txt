@@ -2,9 +2,6 @@ project(DeLorianExecutionManager)
 cmake_minimum_required(VERSION 3.11) 
 
 
-
-
-
 include_directories(include
                     src)
 
@@ -49,8 +46,8 @@ gtest_discover_tests(tests)
 
 # make target for gcov reports 
 if(CMAKE_COMPILER_IS_GNUCXX)
-  # add cmake file to use gcov
-  LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake_modules")
+  # add special cmake file to use gcov
+  LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/tests/code_coverage")
   include(CodeCoverage)
   append_coverage_compiler_flags()
    # we need to turn off optimization for non-skewed coverage reports
@@ -60,6 +57,5 @@ if(CMAKE_COMPILER_IS_GNUCXX)
             NAME code_coverage
             EXECUTABLE tests
             DEPENDENCIES tests
-            BASE_DIRECTORY "${PROJECT_SOURCE_DIR}"
-            EXCLUDE "build/_deps/*")
+            EXCLUDE "build/*")
 endif()
