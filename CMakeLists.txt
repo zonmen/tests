@@ -44,18 +44,21 @@ target_link_libraries(
 include(GoogleTest)
 gtest_discover_tests(tests)
 
-# make target for gcov reports 
-if(CMAKE_COMPILER_IS_GNUCXX)
-  # add special cmake file to use gcov
-  LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/tests/code_coverage")
-  include(CodeCoverage)
-  append_coverage_compiler_flags()
-   # we need to turn off optimization for non-skewed coverage reports
-  set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O0")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
-  setup_target_for_coverage_gcovr_html(
-            NAME code_coverage
-            EXECUTABLE tests
-            DEPENDENCIES tests
-            EXCLUDE "build/*")
-endif()
+# make target for gcov reports(if we have gcovr app)
+find_program( GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/scripts/test)
+if(GCOVR_PATH)
+  if(CMAKE_COMPILER_IS_GNUCXX)
+    # add special cmake file to use gcov
+    LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/tests/code_coverage")
+    include(CodeCoverage)
+    append_coverage_compiler_flags()
+     # we need to turn off optimization for non-skewed coverage reports
+    set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O0")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
+    setup_target_for_coverage_gcovr_html(
+              NAME code_coverage
+              EXECUTABLE tests
+              DEPENDENCIES tests
+              EXCLUDE "build/_deps/*")
+  endif()  
+endif() # NOT GCOVR_PATH

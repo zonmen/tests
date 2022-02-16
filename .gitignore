@@ -395,3 +395,6 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Code coverage report files
+tests/report/*
