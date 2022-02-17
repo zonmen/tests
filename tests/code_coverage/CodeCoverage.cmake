@@ -483,6 +483,9 @@ function(setup_target_for_coverage_gcovr_html)
         message(FATAL_ERROR "gcovr not found! Aborting...")
     endif() # NOT GCOVR_PATH
 
+
+
+
     # Set base directory (as absolute path), or default to PROJECT_SOURCE_DIR
     if(DEFINED Coverage_BASE_DIRECTORY)
         get_filename_component(BASEDIR ${Coverage_BASE_DIRECTORY} ABSOLUTE)
@@ -512,15 +515,19 @@ function(setup_target_for_coverage_gcovr_html)
     set(GCOVR_HTML_EXEC_TESTS_CMD
         ${Coverage_EXECUTABLE} ${Coverage_EXECUTABLE_ARGS}
     )
+    # Set folder for report
+    set(GCOVR_HTML_REPORT_FOLDER
+        ${PROJECT_SOURCE_DIR}/tests/code_coverage/report
+    )
     # Create folder
     set(GCOVR_HTML_FOLDER_CMD
-        ${CMAKE_COMMAND} -E make_directory ${PROJECT_BINARY_DIR}/${Coverage_NAME}
+        ${CMAKE_COMMAND} -E make_directory ${GCOVR_HTML_REPORT_FOLDER}
     )
     # Running gcovr
     set(GCOVR_HTML_CMD
         ${GCOVR_PATH} --html --html-details -r ${BASEDIR} ${GCOVR_ADDITIONAL_ARGS}
         ${GCOVR_EXCLUDE_ARGS} --object-directory=${PROJECT_BINARY_DIR} 
-        -o ${Coverage_NAME}/index.html
+        -o ${GCOVR_HTML_REPORT_FOLDER}/index.html
     )
 
     if(CODE_COVERAGE_VERBOSE)
@@ -544,7 +551,7 @@ function(setup_target_for_coverage_gcovr_html)
         COMMAND ${GCOVR_HTML_FOLDER_CMD}
         COMMAND ${GCOVR_HTML_CMD}
 
-        BYPRODUCTS ${PROJECT_BINARY_DIR}/${Coverage_NAME}/index.html  # report directory
+        BYPRODUCTS ${GCOVR_HTML_REPORT_FOLDER}/index.html  # report directory
         WORKING_DIRECTORY ${PROJECT_BINARY_DIR}
         DEPENDS ${Coverage_DEPENDENCIES}
         VERBATIM # Protect arguments to commands
@@ -554,7 +561,7 @@ function(setup_target_for_coverage_gcovr_html)
     # Show info where to find the report
     add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
         COMMAND ;
-        COMMENT "Open ./${Coverage_NAME}/index.html in your browser to view the coverage report."
+        COMMENT "Open ./tests/code_coverage/report/index.html in your browser to view the coverage report."
     )
 
 endfunction() # setup_target_for_coverage_gcovr_html
@@ -590,6 +597,7 @@ function(setup_target_for_coverage_fastcov)
     if(NOT Coverage_SKIP_HTML AND NOT GENHTML_PATH)
         message(FATAL_ERROR "genhtml not found! Aborting...")
     endif()
+
 
     # Set base directory (as absolute path), or default to PROJECT_SOURCE_DIR
     if(Coverage_BASE_DIRECTORY)

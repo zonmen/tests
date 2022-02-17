@@ -1,6 +1,7 @@
 project(DeLorianExecutionManager)
 cmake_minimum_required(VERSION 3.11) 
 
+
 include_directories(include
                     src)
 
@@ -10,8 +11,11 @@ add_executable(main
               src/yaml_parse.cpp
               src/process_start.cpp)	
 
+
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
+
+
 
 include(FetchContent)
 FetchContent_Declare(
@@ -40,3 +44,20 @@ target_link_libraries(
 include(GoogleTest)
 gtest_discover_tests(tests)
 
+
+# make target for gcov reports(if we have gcovr app)
+find_program( GCOVR_PATH gcovr PATHS ${CMAKE_SOURCE_DIR}/scripts/test)
+if(GCOVR_PATH)
+  # add special cmake file to use gcov
+  LIST(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/tests/code_coverage")
+  include(CodeCoverage)
+  append_coverage_compiler_flags()
+   # we need to turn off optimization for non-skewed coverage reports
+  set(CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} -O0")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0")
+  setup_target_for_coverage_gcovr_html(
+            NAME code_coverage
+            EXECUTABLE tests
+            DEPENDENCIES tests
+            EXCLUDE "build/_deps/*")
+endif() # NOT GCOVR_PATH
