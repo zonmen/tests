@@ -561,7 +561,7 @@ function(setup_target_for_coverage_gcovr_html)
     # Show info where to find the report
     add_custom_command(TARGET ${Coverage_NAME} POST_BUILD
         COMMAND ;
-        COMMENT "Open ./${Coverage_NAME}/index.html in your browser to view the coverage report."
+        COMMENT "Open ./tests/code_coverage/report/index.html in your browser to view the coverage report."
     )
 
 endfunction() # setup_target_for_coverage_gcovr_html
