@@ -4,7 +4,7 @@ Back to [README.md](../README.md)
 
 
 ## Description:
-![Class Diagram](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com//zonmen/tests/edit/main/docs/UML/Struct_prog.puml)
+![Class Diagram](https://www.plantuml.com/plantuml/proxy?cache=no&src=https://raw.githubusercontent.com/zonmen/tests/main/docs/UML/Struct_prog.puml)
 
 
 ## Syntax:
