@@ -1,15 +1,12 @@
 @startuml
-title "Program start program from Yaml file"
-class  yaml_parse  << (H,orchid) >>
+title "Process_start function"
+class  main  << (H,orchid) >>
 class  process_start  << (H,orchid) >>
-class  types  << (H,orchid) >>
 
 
 
-main --|> process_start :"<vector> set_prog_start"
-
-main --|> yaml_parse :"parse_yaml(file_name.yaml)"
-yaml_parse --|> main :"<vector> set_prog_start"
+main --|> process_start :"set_prog_start &"
+process start --|> main :"pid_t"
 
 
 
