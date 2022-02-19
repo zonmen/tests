@@ -16,7 +16,6 @@ process_start --|> types :"<include>"
 yaml_parse --|> types :"<include>"
 
 process_start --|> test_folder1 :"set_prog_start 1"
-process_start --|> test_folder2 :"set_prog_start 2"
 process_start --|> blabla : "rrrr" 
 
 test_folder1 --|> example_app
