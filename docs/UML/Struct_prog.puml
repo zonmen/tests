@@ -1,0 +1,35 @@
+@startuml
+title "Program start program from Yaml file"
+class  yaml_parse  << (H,orchid) >>
+class  process_start  << (H,orchid) >>
+class  types  << (H,orchid) >>
+
+yaml_file --|> main :"file_name.yaml"
+
+
+main --|> process_start :"<vector> set_prog_start"
+
+main --|> yaml_parse :"parse_yaml(file_name.yaml)"
+yaml_parse --|> main :"<vector> set_prog_start"
+
+process_start --|> types :"<include>"
+yaml_parse --|> types :"<include>"
+
+process_start --|> test_folder1 :"set_prog_start 1"
+process_start --|> test_folder2 :"set_prog_start 2"
+
+test_folder1 --|> example_app
+test_folder2 --|> example_app1  
+
+
+test_folder1 : arg1
+test_folder1 : arg2
+
+test_folder2 : arg_1
+test_folder2 : arg_2
+
+yaml_parse : yaml_parse(filename)
+process_start : start_process(<vector>set_prog_start)
+
+
+@enduml
