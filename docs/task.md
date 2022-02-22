@@ -38,3 +38,5 @@ $ make code_coverage
 ## Example
  <img src="docs/UML/screen-shot-code-coverage-1.png">
  <img src="docs/UML/screen-shot-code-coverage-2.png">
+  <img src="UML/screen-shot-code-coverage-1.png">
+   <img src="tests/docs/UML/screen-shot-code-coverage-2.png">
